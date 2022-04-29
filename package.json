@@ -1,6 +1,6 @@
 {
   "name": "@lijixuan/timer",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": false,
   "scripts": {
     "dev": "vue-cli-service serve",
@@ -38,7 +38,7 @@
     },
     "rules": {}
   },
-  "main": "./dist/timer.common.js",
+  "main": "./src/components/index.js",
   "files": [
     "dist/*",
     "src/*",
