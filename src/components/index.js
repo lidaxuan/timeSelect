@@ -9,6 +9,7 @@
 
 import Vue from "vue";
 import Timer from "./timer/index.vue";
+import format from './timer/format';
 
 const Components = {
   Timer
@@ -18,4 +19,4 @@ Object.keys(Components).forEach(name => {
   Vue.component(name, Components[name]);
 });
 
-export default Timer;
+export { Timer, format };
