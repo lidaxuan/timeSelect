@@ -15,7 +15,7 @@
       <thead>
         <tr>
           <th class="day" rowspan="2">
-            <span font="h6">{{ text[type] }}\时间</span>
+            <span>{{ text[type] }}\时间</span>
           </th>
           <th colspan="24">00:00-12:00</th>
           <th colspan="24">12:00-24:00</th>
@@ -29,7 +29,7 @@
       <tbody>
         <tr v-for="(item, x) in time" :key="x">
           <td class="day">
-            <span font="h6">{{ timeObj[type][x] }}</span>
+            <span>{{ timeObj[type][x] }}</span>
           </td>
           <template v-for="(value, y) in item">
             <td class="hour" :class="value | classNmae" :style="getbgColor(value)" :data-x="x" :data-y="y" :key="`${x}-${y}`" @click="checkendItem"></td>
@@ -38,17 +38,18 @@
       </tbody>
     </table>
     <div class="duration-tipline">
-      <div class="empty-button" @click="empty">
-        <span>
-          <b>清空</b>
-        </span>
-      </div>
-      <div>
+      <div style="display: flex">
         <span class="sample off" font="h5"></span>
         <label font="h5">未选</label>
         <span class="sample on" :style="`background-color: ${color};`" font="h5"></span>
         <label font="h5">已选</label>
-        <label class="ml20 gray" font="h5">可拖动鼠标选择时间</label>
+        <label class="ml20 tip" font="h5">
+          <img src="../../assets/F5.png" width="12" height="12" alt="" />
+          可拖动鼠标选择时间
+        </label>
+      </div>
+      <div class="empty-button" @click="empty">
+        <span :style="`color: ${color};`">清空</span>
       </div>
     </div>
   </div>
@@ -71,12 +72,13 @@ function getday(days = 1) {
   for (let i = 0; i <= 24 * days; i += 24) {
     //今天加上前6天
     let dateItem = new Date(currentDate.getTime() + i * 60 * 60 * 1000); //使用当天时间戳减去以前的时间毫秒（小时*分*秒*毫秒）
-    let y = dateItem.getFullYear(); //获取年份
+    // let y = dateItem.getFullYear(); //获取年份
     let m = dateItem.getMonth() + 1; //获取月份js月份从0开始，需要+1
     let d = dateItem.getDate(); //获取日期
     m = addZero(m); //给为单数的月份补零
     d = addZero(d); //给为单数的日期补零
-    let valueItem = y + '/' + m + '/' + d; //组合
+    // let valueItem = y + '/' + m + '/' + d; //组合
+    let valueItem = m + '月' + d + '日'; //组合
     daysArr.push(valueItem); //添加至数组
   }
   return daysArr;
@@ -95,7 +97,7 @@ export default {
       time: [],
       // text: '',
       timeObj: {
-        week: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+        week: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
         date: []
       },
       text: {
@@ -278,9 +280,8 @@ export default {
 
 .duration {
   position: relative;
-  $width: 670px;
+  $width: 752px;
   $day: 85px;
-
   width: $width;
   .mark {
     position: absolute;
@@ -308,7 +309,7 @@ export default {
 
     .day,
     .hour {
-      height: 30px;
+      height: 35px;
       outline: none;
       user-select: none;
     }
@@ -321,7 +322,7 @@ export default {
       cursor: pointer;
     }
     span {
-      font-weight: normal;
+      font-weight: 400;
     }
   }
 
@@ -333,23 +334,38 @@ export default {
   }
 
   .duration-tipline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 5px;
     .sample {
       width: 15px;
       height: 15px;
       border: 1px solid #d1d1d1;
+      border-radius: 4px;
     }
     span,
     label {
       display: inline-block;
       vertical-align: middle;
     }
-    .gray {
-      color: #999;
+    span {
+      margin-right: 5px;
+    }
+    label {
+      margin-right: 24px;
+      color: #999999;
+      font-size: 12px;
+    }
+    .tip {
+      display: flex;
+      align-items: center;
     }
     .empty-button {
-      float: right;
       cursor: pointer;
+    }
+    img {
+      margin-right: 4px;
     }
   }
 }
